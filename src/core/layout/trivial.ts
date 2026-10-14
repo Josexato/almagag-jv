@@ -40,6 +40,7 @@ export function trivialScene(d: Diagram, log: Log): Scene {
       status: e.status,
       box: { x, y, w: ICON_W, h: ICON_H },
       pinned,
+      isContainer: e.isContainer,
     };
   });
   const edges: SceneEdge[] = [];

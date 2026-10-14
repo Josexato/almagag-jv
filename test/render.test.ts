@@ -113,3 +113,19 @@ describe('CLI', () => {
     }
   });
 });
+
+describe('contenedores en fase 1', () => {
+  it('un contenedor no es icono: ni §O55 ni BWT (falso aviso detectado al mirar c18)', () => {
+    const r = render(
+      JSON.stringify({
+        elements: [
+          { id: 'z', type: 'area', label: 'Zona', contains: ['a'] },
+          { id: 'a', type: 'server' },
+        ],
+      }),
+    );
+    expect(r.log.some((l) => l.msg.startsWith('§O55'))).toBe(false);
+    expect(r.svg).toContain('ag-container-provisional');
+    expect(r.log.some((l) => l.msg.includes('1 contenedor(es) como caja provisional'))).toBe(true);
+  });
+});

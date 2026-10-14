@@ -38,6 +38,8 @@ export interface SceneNode {
   readonly box: Box;
   /** Coordenadas declaradas por el autor (compatibilidad heredada, H5). */
   readonly pinned: boolean;
+  /** Elemento con `contains`: no es icono (el oráculo lo dibuja por la vía de contenedores). */
+  readonly isContainer: boolean;
 }
 
 export type Route =

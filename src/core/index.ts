@@ -27,6 +27,12 @@ export function render(input: string, opts: RenderOptions = {}): RenderResult {
   const log = new Log();
   const { diagram, profile, icons, doc } = normalize(input, opts.view ?? 'auto', log);
   const scene = trivialScene(diagram, log);
+  const containers = diagram.elements.filter((e) => e.isContainer).length;
+  if (containers) {
+    log.warning(
+      `[jv] fase 1: ${containers} contenedor(es) como caja provisional — su dibujo llega en la fase 4`,
+    );
+  }
   log.warning(
     `[${profile}] fase 1: colocación trivial en grilla — layout, ruteo y audit ` +
       `no implementados (${scene.nodes.size} nodos, ${scene.edges.size} aristas)`,

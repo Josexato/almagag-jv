@@ -67,6 +67,20 @@ export function emitSvg(scene: Scene, opts: EmitOptions, log: Log): string {
   }
   for (const n of scene.nodes.values()) {
     const { x, y } = n.box;
+    if (n.isContainer) {
+      // Fase 1: caja provisional (el dibujo de contenedores es la fase 4). Un
+      // contenedor NO es icono: ni §O55 ni BWT (el oráculo tampoco lo trata así).
+      nodes.push(
+        `<rect${attrs({ class: 'ag-container-provisional', x, y, width: ICON_WIDTH, height: ICON_HEIGHT, fill: 'none', stroke: '#888', 'stroke-dasharray': '4 3' })}/>` +
+          label(n.label, x + ICON_WIDTH / 2, y + ICON_HEIGHT + LABEL_GAP, n.status),
+      );
+      maxX = Math.max(maxX, x + ICON_WIDTH);
+      maxY = Math.max(
+        maxY,
+        y + ICON_HEIGHT + LABEL_GAP + n.label.split('\n').length * TEXT_LINE_HEIGHT,
+      );
+      continue;
+    }
     const icon = drawIconShape(
       { id: n.authorId, x, y, type: n.type, color: n.color },
       opts.icons,

@@ -34,6 +34,7 @@ const arbScene = fc
         status: '',
         box: { x: xs[i] ?? 0, y: i * 10, w: 80, h: 50 },
         pinned: false,
+        isContainer: false,
       })),
       edges.map(([a, b], i) => ({
         id: `e${i}` as EdgeId,
@@ -142,6 +143,7 @@ describe('A1 · escena inmutable', () => {
           color: 'gray',
           box: { x: 0, y: 0, w: 80, h: 50 },
           pinned: false,
+          isContainer: false,
         },
         {
           id: 'b',
@@ -152,6 +154,7 @@ describe('A1 · escena inmutable', () => {
           color: 'gray',
           box: { x: 200, y: 0, w: 80, h: 50 },
           pinned: false,
+          isContainer: false,
         },
       ],
       [
