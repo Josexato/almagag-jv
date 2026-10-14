@@ -1,5 +1,13 @@
 # AlmaGag-TS — propuesta de arranque (entregable previo a la fase 0)
 
+> **Fe de erratas (fase 0, medida desde `golden/reference-v3.20.0.json`, no a mano):**
+> (1) el corpus Python es **34 auto / 6 hier**, no 33/7; el dato de P1 queda
+> «26 de los 34 fixtures auto». (2) H1 decía «cero genealogías»: falso,
+> `13-stresstest.gag` es un árbol familiar (`[AA]` en el log); sí es cierto
+> que ninguno usa `partition`, serpenteo ni `steps`. (3) H3c (bandas de
+> journeys sin medir) NO es divergencia: es contrato heredado (spec §5.8),
+> ver `docs/DECISIONES.md` H-01. (4) Nombre: todo es `almagag-jv`.
+
 Referencia congelada: **AlmaGag Python v3.20.0** (commit `9c7087d`, merge de
 josexato/AlmaGag#113). Todo lo de este documento se midió ejecutando el oráculo
 y no sólo leyéndolo. La suite Python corre así: 657 passed, 1 failed y 3 skipped.

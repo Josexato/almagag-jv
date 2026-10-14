@@ -1,0 +1,51 @@
+{
+  "name": "almagag-jv",
+  "version": "0.0.1",
+  "description": "AlmaGag en TypeScript: JSON declarativo (.sdjf/.gag) → SVG, en browser y Node. Referencia: AlmaGag Python v3.20.0.",
+  "license": "MIT",
+  "author": "José Cáceres (@Josexato)",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "almagag-jv": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "almagag": {
+    "referenceEngine": "AlmaGag-Python",
+    "referenceVersion": "3.20.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json",
+    "lint": "biome check . && node tools/check-core-purity.mjs",
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "golden": "node --experimental-strip-types tools/golden.ts",
+    "png": "node --experimental-strip-types tools/render-png.ts",
+    "ci": "npm run typecheck && npm run lint && npm test && npm run build && npm run golden && npm run bench",
+    "bench": "node --experimental-strip-types tools/bench.ts",
+    "smoke:browser": "node --experimental-strip-types tools/browser-smoke.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@types/node": "22.20.4",
+    "fast-check": "4.10.2",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3",
+    "vite": "7.1.12",
+    "vitest": "4.1.11"
+  }
+}

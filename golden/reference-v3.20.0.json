@@ -1,10 +1,23 @@
 {
- "reference_engine": "AlmaGag-Python",
- "reference_version": "3.20.0",
+ "provenance": {
+  "reference_engine": "AlmaGag-Python",
+  "repository": "https://github.com/Josexato/AlmaGag",
+  "version": "3.20.0",
+  "commit": "9c7087d5861d94e03baf53e7946901ad2526bcf0",
+  "commit_note": "Merge de Josexato/AlmaGag#113 — cierre iteración 18 (Z97 re-solver)",
+  "python": ">=3.10 (medido con 3.13)",
+  "dependencies": {
+   "svgwrite": "1.4.3"
+  }
+ },
+ "fixtures_dir": "fixtures/py-v3.20.0",
  "fixtures_measured": 40,
+ "fixtures_total": 40,
  "rows": [
   {
    "fixture": "01-iconos-registrados.sdjf",
+   "fixture_sha256": "ae985c59c67984aea813d575aca8e7f7368a2eff696b9700e65f1e4eca00f1e6",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -18,10 +31,13 @@
     "§O52: aspecto 3.90 fuera de [0.4, 3.0] — lámina desproporcionada"
    ],
    "svg_sha256": "32459bb3da331f6b",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 188
   },
   {
    "fixture": "02-iconos-no-registrados.sdjf",
+   "fixture_sha256": "f1b140a28a0a12a7f17c465a746e12b89549bf0e9ad3651943aa3baed338f450",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -35,10 +51,13 @@
     "§O55: type 'switch' sin icono registrado — se dibuja el BWT por defecto. Error: No module named 'AlmaGag.draw.icons.switch'"
    ],
    "svg_sha256": "0befa9285d2b52dd",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 20
   },
   {
    "fixture": "03-conexiones.sdjf",
+   "fixture_sha256": "f8b4971a313946032f2d026dafcfa5d0c63736527f78d8ee26e3a44a0cfff090",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -50,10 +69,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "b1536752737b455b",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 13
   },
   {
    "fixture": "04-gradientes-colores.sdjf",
+   "fixture_sha256": "7bdae77aa6d3b87203427edd3809e5349611a9959e8206dfb3d3fff25f9e4130",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -65,10 +87,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "ab28912ba7599b36",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 30
   },
   {
    "fixture": "05-arquitectura-gag.gag",
+   "fixture_sha256": "1a81d901f6476320633d28910ba9dcd078915681452deef9426838cb45fc8b7d",
+   "view": "auto",
    "motor": "auto",
    "cruces": 3,
    "arista_nodo": 1,
@@ -80,10 +105,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "90931995ff259de3",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 1472
   },
   {
    "fixture": "06-flujo-ejecucion.sdjf",
+   "fixture_sha256": "da31e5dfa3817f948b03d749b90fdc5fbdafd77081e6fb47312bff9359f9640a",
+   "view": "auto",
    "motor": "auto",
    "cruces": 5,
    "arista_nodo": 1,
@@ -95,10 +123,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "a1744e618a0775b0",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 821
   },
   {
    "fixture": "06-waypoints.sdjf",
+   "fixture_sha256": "4fa4330ee1ee486cdb500c6ff50041bdbf861af77ff9e569909334fa295f5ea7",
+   "view": "auto",
    "motor": "auto",
    "cruces": 1,
    "arista_nodo": 0,
@@ -110,10 +141,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "b5fa51f7d4188703",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 31
   },
   {
    "fixture": "07-containers.sdjf",
+   "fixture_sha256": "f5c2eda217acbdf64541c01086db64fff62ae2d9136610eafebaa905ec950da6",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 2,
@@ -125,10 +159,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "8d58c6e78e83ff38",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 52
   },
   {
    "fixture": "08-auto-layout.sdjf",
+   "fixture_sha256": "c61deb971de271b0bf5622667096163e671d94940d63e431eddae05b21f360a1",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -140,10 +177,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "e0625649ae8c5fab",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 137
   },
   {
    "fixture": "09-proportional-sizing.sdjf",
+   "fixture_sha256": "19734deed91b7e1aab757e86127ce834467d6bad3dc213912654d1cc89ebaf9b",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -155,10 +195,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "18d1fdec7089b394",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 19
   },
   {
    "fixture": "10-hybrid-layout.sdjf",
+   "fixture_sha256": "1837f890cdd0444cb1a7314b19afeb01bf02f7655c611c50e2592e57ca91f7ad",
+   "view": "auto",
    "motor": "auto",
    "cruces": 3,
    "arista_nodo": 0,
@@ -170,10 +213,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "c98f21078fea46ae",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 23
   },
   {
    "fixture": "11-stresstest.sdjf",
+   "fixture_sha256": "8c45b054d1db08023fc6ae22e0a3f1f32f38180d50476cc6c542449aaf1bc3d6",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -185,10 +231,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "3d98d088086968b7",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 36
   },
   {
    "fixture": "12-custom-icons.gag",
+   "fixture_sha256": "cbfa838b106cc1436a5ba30de8412f6cd1b1eff0fb6d2c8098359b945c3d7561",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -200,10 +249,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "c0dd94283c72b1fb",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 59
   },
   {
    "fixture": "13-stresstest.gag",
+   "fixture_sha256": "00744fdb3283c814f7319af11cb26498446c1650bc8404107a522aa54eed855f",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -215,10 +267,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "fd1edc09a04bd2e3",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 1836
   },
   {
    "fixture": "14-stresstest.sdjf",
+   "fixture_sha256": "ffa72f394ef0a65275795baeea6ead08eb64db2a2551bdda7a65fad886f3109c",
+   "view": "auto",
    "motor": "hier",
    "cruces": 1,
    "arista_nodo": 1,
@@ -230,10 +285,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "adc5b61b50a60d21",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 17
   },
   {
    "fixture": "15-architecture-template.gag",
+   "fixture_sha256": "e5a166aaa0541941c28b00f7f2cd1113710a81aaad65389af722f83347ffce13",
+   "view": "auto",
    "motor": "auto",
    "cruces": 8,
    "arista_nodo": 0,
@@ -245,10 +303,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "54187b2a4adfb6ec",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 1045
   },
   {
    "fixture": "16-contract-band.gag",
+   "fixture_sha256": "8c85e261ea7c086ef4a711351f392b77f0cd16ecd1f02d97bef4c122ce7f7be9",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -260,10 +321,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "c4bff439d034f22d",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 23
   },
   {
    "fixture": "17-semantic-connections.gag",
+   "fixture_sha256": "48db1d017eddc1c5a34c36e891e959ad12b16b4e96ec982ff31de3347859742e",
+   "view": "auto",
    "motor": "auto",
    "cruces": 1,
    "arista_nodo": 0,
@@ -275,10 +339,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "99dfdc87bce73e3f",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 11
   },
   {
    "fixture": "activacion-datacenter.sdjf",
+   "fixture_sha256": "28ee6d980a48f62c20583505c3af1ff29d60c6590a282fd729234d0123367bfb",
+   "view": "auto",
    "motor": "hier",
    "cruces": 1,
    "arista_nodo": 2,
@@ -290,10 +357,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "6bbad26ad1a22a24",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 44
   },
   {
    "fixture": "cakephp-mvc.gag",
+   "fixture_sha256": "72a8aa9126d39e8c84605cbab649535147c4740f798c4bc31d6339a63a65c613",
+   "view": "auto",
    "motor": "auto",
    "cruces": 7,
    "arista_nodo": 4,
@@ -305,10 +375,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "843682d728d00d57",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 953
   },
   {
    "fixture": "ciclo-retrabajo.sdjf",
+   "fixture_sha256": "afe4a3d15813b521ec6391e7e4425adbc4848a81086dd9c764160736b2f84929",
+   "view": "auto",
    "motor": "hier",
    "cruces": 0,
    "arista_nodo": 1,
@@ -320,10 +393,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "6c6255883b9598a6",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 7
   },
   {
    "fixture": "considerations-demo.sdjf",
+   "fixture_sha256": "838650bbfb99c87fb27eba7ec558667ed50b1b0fde8c6a62dc607867ff70ef3c",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -337,10 +413,13 @@
     "[align] grupo 4 (x): ids desalineados — web1=140 · web2=260 · web3=380"
    ],
    "svg_sha256": "b9085a12495e4355",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 18
   },
   {
    "fixture": "continentes-america.sdjf",
+   "fixture_sha256": "82b4d7adfbbb9273c9c123185d3df4db3844f8b537649b9970b00d82009bfbeb",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 1,
@@ -352,10 +431,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "1ce5e51ac7e0058f",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 4172
   },
   {
    "fixture": "es-primo.gag",
+   "fixture_sha256": "7f455ea7376a6e207e1b67263ca96b6641a11a6253fc298b465a1ab82c31239f",
+   "view": "auto",
    "motor": "hier",
    "cruces": 0,
    "arista_nodo": 1,
@@ -367,10 +449,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "5a8e5f11c2f8e0cc",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 12
   },
   {
    "fixture": "git.sdjf",
+   "fixture_sha256": "bc4af4eb458ebabcb5e8e9454d935d38783899f7589afad43dcf4361f237a7ed",
+   "view": "auto",
    "motor": "auto",
    "cruces": 6,
    "arista_nodo": 1,
@@ -382,10 +467,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "430f5ebe160968af",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 3517
   },
   {
    "fixture": "layout-optimization-flow.sdjf",
+   "fixture_sha256": "230d77474e71e8238344a3fa69e160a3a04dd8b51d53434d9f9073566f01aeed",
+   "view": "auto",
    "motor": "hier",
    "cruces": 1,
    "arista_nodo": 0,
@@ -397,10 +485,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "7118d4580947f691",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 27
   },
   {
    "fixture": "mina-arquitectura-fisica.sdjf",
+   "fixture_sha256": "3fe9ca9bee127604286a3efb20883c686fb366a7881e3d123ecf5d1b7eb12544",
+   "view": "auto",
    "motor": "auto",
    "cruces": 19,
    "arista_nodo": 9,
@@ -427,10 +518,13 @@
     "§O55: type 'powergrid' sin icono registrado — se dibuja el BWT por defecto. Error: No module named 'AlmaGag.draw.icons.powergrid'"
    ],
    "svg_sha256": "f4e5141ec1c401c4",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 1741
   },
   {
    "fixture": "mina-fisico-v2.gag",
+   "fixture_sha256": "539ba9c77ced687f06bf11bbf3872804ad98596750a5d76d46e1e1a8c1ea6c8e",
+   "view": "auto",
    "motor": "auto",
    "cruces": 4,
    "arista_nodo": 6,
@@ -442,10 +536,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "fae716aaa0aa3dda",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 272
   },
   {
    "fixture": "mina-hld.gag",
+   "fixture_sha256": "04062537167953aa7126985d397af92911a81b87a302d70e2afcf54c9775b2a5",
+   "view": "auto",
    "motor": "auto",
    "cruces": 4,
    "arista_nodo": 1,
@@ -457,10 +554,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "00ba01f573cec3ae",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 825
   },
   {
    "fixture": "mina-presupuesto.sdjf",
+   "fixture_sha256": "a55c7b600a98ac54561702534c50d60e03ab5a57d8f93da4d99ce2e316c5c64a",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -472,10 +572,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "d83da628cd7b5eef",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 6019
   },
   {
    "fixture": "organigrama-empresa.sdjf",
+   "fixture_sha256": "7ac7e58926021e757a446018bf12008c4e9529b9624d7f9d951a89e9e35ddef5",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -487,10 +590,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "ad75c2999e986532",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 17
   },
   {
    "fixture": "red-dual-homing-areas.sdjf",
+   "fixture_sha256": "860bb035fb8ce2e81de1fd1b8047e3ff540528c5ab0d3ad5948cf385d07ec470",
+   "view": "auto",
    "motor": "hier",
    "cruces": 0,
    "arista_nodo": 0,
@@ -502,10 +608,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "0cbfc6d570f840a6",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 17
   },
   {
    "fixture": "red-dual-homing.sdjf",
+   "fixture_sha256": "0524dd5aedff0b93ea4f07ab27bdf1b8e2fc6d078af4c2328216545fd0c06d27",
+   "view": "auto",
    "motor": "auto",
    "cruces": 1,
    "arista_nodo": 0,
@@ -517,10 +626,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "f82010c128bc462f",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 31
   },
   {
    "fixture": "red-minera-antes.gag",
+   "fixture_sha256": "c51fb81a72b10ea4e7a1e2ec33ad9b7a205a199e0c59c853556ffd44d2d3e0fa",
+   "view": "auto",
    "motor": "auto",
    "cruces": 3,
    "arista_nodo": 0,
@@ -532,10 +644,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "054a9732cd16fd55",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 439
   },
   {
    "fixture": "red-minera-despues.gag",
+   "fixture_sha256": "c31a447772d4aaba4a80ec481147e932cb431aa77f8b8fbcb28215487ebe3907",
+   "view": "auto",
    "motor": "auto",
    "cruces": 1,
    "arista_nodo": 0,
@@ -547,10 +662,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "e3507c5cfbff15a6",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 827
   },
   {
    "fixture": "reference-cheatsheet.sdjf",
+   "fixture_sha256": "75a43d7c479a13de40c58773af9c330cfbbc1d6300cfd20b76ca00ea820024e8",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -564,10 +682,13 @@
     "Element cnt_border sin coordenadas, omitiendo"
    ],
    "svg_sha256": "31d6141f8df3105b",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 9297
   },
   {
    "fixture": "roadmap-versions.sdjf",
+   "fixture_sha256": "2d3deef6ef10f0983e800f1a3f8cecc742ffab139608b0ef0d22d7a30d2507a3",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -579,10 +700,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "9de3ee3bd810925c",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 36
   },
   {
    "fixture": "routing-architecture.sdjf",
+   "fixture_sha256": "3d48c3cedde9f6efecae8468be15cab16c8a8c35a72c99739d226fefc622ffd6",
+   "view": "auto",
    "motor": "auto",
    "cruces": 2,
    "arista_nodo": 0,
@@ -594,10 +718,13 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "56faed385d722b6e",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 64
   },
   {
    "fixture": "svg-to-bwt-flow.sdjf",
+   "fixture_sha256": "a9e8a36d4134406c1ca08ec5f09aadf06300b916526b419c83f9ab192300a106",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -611,10 +738,13 @@
     "§O52: aspecto 0.37 fuera de [0.4, 3.0] — lámina desproporcionada"
    ],
    "svg_sha256": "55f23ba16180b986",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 1371
   },
   {
    "fixture": "system-architecture.sdjf",
+   "fixture_sha256": "23807c361b267434502efb0f3b9fdc156a2de32cf98928e21647e2b0a065d6de",
+   "view": "auto",
    "motor": "auto",
    "cruces": 0,
    "arista_nodo": 0,
@@ -626,7 +756,8 @@
    "warnings": 0,
    "warning_msgs": [],
    "svg_sha256": "ecba9f630415c1c9",
-   "deterministic": true
+   "deterministic": true,
+   "render_ms": 78
   }
  ]
 }

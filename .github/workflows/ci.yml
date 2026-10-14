@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+
+jobs:
+  suite:
+    name: typecheck · lint · test · build · golden · bench
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - name: golden (referencia AlmaGag Python v3.20.0)
+        run: npm run golden -- --report out/golden-report.md
+      - run: npm run bench
+      - name: reporte golden en el resumen del job
+        if: always()
+        run: test -f out/golden-report.md && cat out/golden-report.md >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: golden-report
+          path: out/golden-report.md

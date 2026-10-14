@@ -1,0 +1,331 @@
+{
+  "elements": [
+    {
+      "id": "main",
+      "type": "server",
+      "label": "main.py\nEntry Point"
+    },
+    {
+      "id": "args_parser",
+      "type": "document",
+      "label": "Parse Args\n(CLI flags)"
+    },
+    {
+      "id": "load_gag",
+      "type": "document",
+      "label": "Load .gag File\n(JSON)"
+    },
+    {
+      "id": "layout_obj",
+      "type": "database",
+      "label": "Layout Object\nelements, connections"
+    },
+    {
+      "id": "algorithm_choice",
+      "type": "firewall",
+      "label": "Algorithm?\nauto vs laf"
+    },
+    {
+      "id": "laf_optimizer",
+      "type": "building",
+      "label": "LAF Optimizer v1.8\n11 Fases",
+      "contains": [
+        {
+          "id": "phase1"
+        },
+        {
+          "id": "phase2"
+        },
+        {
+          "id": "phase3"
+        },
+        {
+          "id": "phase4"
+        },
+        {
+          "id": "phase5"
+        },
+        {
+          "id": "phase6"
+        },
+        {
+          "id": "phase7"
+        },
+        {
+          "id": "phase8"
+        },
+        {
+          "id": "phase9"
+        },
+        {
+          "id": "phase10"
+        },
+        {
+          "id": "phase11"
+        }
+      ]
+    },
+    {
+      "id": "phase1",
+      "type": "cloud",
+      "label": "Phase 1\nStructure Analysis\n(tree + graph + levels)"
+    },
+    {
+      "id": "phase2",
+      "type": "cloud",
+      "label": "Phase 2\nTopological Analysis"
+    },
+    {
+      "id": "phase3",
+      "type": "cloud",
+      "label": "Phase 3\nCentrality Ordering\n(scores + layer order)"
+    },
+    {
+      "id": "phase4",
+      "type": "cloud",
+      "label": "Phase 4\nAbstract Placement\n(barycenter heuristic)"
+    },
+    {
+      "id": "phase5",
+      "type": "cloud",
+      "label": "Phase 5\nPosition Optimization\n(layer-offset bisection)"
+    },
+    {
+      "id": "phase6",
+      "type": "cloud",
+      "label": "Phase 6\nNdPr Expansion"
+    },
+    {
+      "id": "phase7",
+      "type": "cloud",
+      "label": "Phase 7\nIterative Summary\n(alpha + corridors)"
+    },
+    {
+      "id": "phase8",
+      "type": "cloud",
+      "label": "Phase 8\nInflation +\nContainer Growth"
+    },
+    {
+      "id": "phase9",
+      "type": "cloud",
+      "label": "Phase 9\nRedistribution\n(spacing + centering)"
+    },
+    {
+      "id": "phase10",
+      "type": "cloud",
+      "label": "Phase 10\nRouting"
+    },
+    {
+      "id": "phase11",
+      "type": "cloud",
+      "label": "Phase 11\nVisualization\n(debug SVGs)"
+    },
+    {
+      "id": "auto_optimizer",
+      "type": "building",
+      "label": "Auto Optimizer v4.0\nBarycenter + Pos.Opt."
+    },
+    {
+      "id": "routing",
+      "type": "server",
+      "label": "RouterManager\nConnection Paths"
+    },
+    {
+      "id": "generator",
+      "type": "building",
+      "label": "Generator\nCreate SVG",
+      "contains": [
+        {
+          "id": "render0"
+        },
+        {
+          "id": "render1"
+        },
+        {
+          "id": "render2"
+        },
+        {
+          "id": "render3"
+        },
+        {
+          "id": "render4"
+        },
+        {
+          "id": "render5"
+        }
+      ]
+    },
+    {
+      "id": "render0",
+      "type": "document",
+      "label": "0. Container\nBackgrounds"
+    },
+    {
+      "id": "render1",
+      "type": "document",
+      "label": "1. Icons\n(normal + container)"
+    },
+    {
+      "id": "render2",
+      "type": "document",
+      "label": "2. Connections\n(lines + markers)"
+    },
+    {
+      "id": "render3",
+      "type": "document",
+      "label": "3. Label Optimizer\n(collision resolution)"
+    },
+    {
+      "id": "render4",
+      "type": "document",
+      "label": "4. Element +\nConnection Labels"
+    },
+    {
+      "id": "render5",
+      "type": "document",
+      "label": "5. Container\nLabels (fixed)"
+    },
+    {
+      "id": "output_svg",
+      "type": "database",
+      "label": "Output SVG\n+ PNG (optional)"
+    }
+  ],
+  "connections": [
+    {
+      "from": "main",
+      "to": "args_parser",
+      "label": "start"
+    },
+    {
+      "from": "args_parser",
+      "to": "load_gag",
+      "label": "config"
+    },
+    {
+      "from": "load_gag",
+      "to": "layout_obj",
+      "label": "parse JSON"
+    },
+    {
+      "from": "layout_obj",
+      "to": "algorithm_choice",
+      "label": "ready"
+    },
+    {
+      "from": "algorithm_choice",
+      "to": "laf_optimizer",
+      "label": "if laf"
+    },
+    {
+      "from": "algorithm_choice",
+      "to": "auto_optimizer",
+      "label": "if auto"
+    },
+    {
+      "from": "phase1",
+      "to": "phase2",
+      "label": ""
+    },
+    {
+      "from": "phase2",
+      "to": "phase3",
+      "label": ""
+    },
+    {
+      "from": "phase3",
+      "to": "phase4",
+      "label": ""
+    },
+    {
+      "from": "phase4",
+      "to": "phase5",
+      "label": ""
+    },
+    {
+      "from": "phase5",
+      "to": "phase6",
+      "label": ""
+    },
+    {
+      "from": "phase6",
+      "to": "phase7",
+      "label": ""
+    },
+    {
+      "from": "phase7",
+      "to": "phase8",
+      "label": ""
+    },
+    {
+      "from": "phase8",
+      "to": "phase9",
+      "label": ""
+    },
+    {
+      "from": "phase9",
+      "to": "phase10",
+      "label": ""
+    },
+    {
+      "from": "phase10",
+      "to": "phase11",
+      "label": ""
+    },
+    {
+      "from": "phase10",
+      "to": "routing",
+      "label": "uses"
+    },
+    {
+      "from": "laf_optimizer",
+      "to": "generator",
+      "label": "optimized_layout"
+    },
+    {
+      "from": "auto_optimizer",
+      "to": "routing",
+      "label": "optimized_layout"
+    },
+    {
+      "from": "routing",
+      "to": "generator",
+      "label": "connection_paths"
+    },
+    {
+      "from": "render0",
+      "to": "render1",
+      "label": ""
+    },
+    {
+      "from": "render1",
+      "to": "render2",
+      "label": ""
+    },
+    {
+      "from": "render2",
+      "to": "render3",
+      "label": ""
+    },
+    {
+      "from": "render3",
+      "to": "render4",
+      "label": ""
+    },
+    {
+      "from": "render4",
+      "to": "render5",
+      "label": ""
+    },
+    {
+      "from": "generator",
+      "to": "output_svg",
+      "label": "render"
+    }
+  ],
+  "canvas": {
+    "width": 1400,
+    "height": 1800
+  },
+  "layout_template": "auto"
+}

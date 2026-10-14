@@ -1,0 +1,89 @@
+{
+  "canvas": {
+    "width": 1400,
+    "height": 400
+  },
+  "elements": [
+    {
+      "id": "server1",
+      "type": "server",
+      "x": 50,
+      "y": 100,
+      "label": "Server\n(Rack server)",
+      "color": "lightgreen"
+    },
+    {
+      "id": "cloud1",
+      "type": "cloud",
+      "x": 200,
+      "y": 100,
+      "label": "Cloud\n(Nube)",
+      "color": "lightblue"
+    },
+    {
+      "id": "building1",
+      "type": "building",
+      "x": 350,
+      "y": 100,
+      "label": "Building\n(Edificio)",
+      "color": "lavender"
+    },
+    {
+      "id": "firewall1",
+      "type": "firewall",
+      "x": 500,
+      "y": 100,
+      "label": "Firewall\n(Cortafuegos)",
+      "color": "tomato"
+    },
+    {
+      "id": "database1",
+      "type": "database",
+      "x": 650,
+      "y": 100,
+      "label": "Database\n(Base de datos)",
+      "color": "gold"
+    },
+    {
+      "id": "router1",
+      "type": "router",
+      "x": 800,
+      "y": 100,
+      "label": "Router\n(Enrutador)",
+      "color": "orange"
+    },
+    {
+      "id": "computer1",
+      "type": "computer",
+      "x": 950,
+      "y": 100,
+      "label": "Computer\n(Monitor)",
+      "color": "cyan"
+    },
+    {
+      "id": "laptop1",
+      "type": "laptop",
+      "x": 1100,
+      "y": 100,
+      "label": "Laptop\n(Portatil)",
+      "color": "silver"
+    },
+    {
+      "id": "document1",
+      "type": "document",
+      "x": 50,
+      "y": 250,
+      "label": "Document\n(Archivo)",
+      "color": "lightyellow"
+    },
+    {
+      "id": "user1",
+      "type": "user",
+      "x": 200,
+      "y": 250,
+      "label": "User\n(Persona)",
+      "color": "pink"
+    }
+  ],
+  "connections": []
+}
