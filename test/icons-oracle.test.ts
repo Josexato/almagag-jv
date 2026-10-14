@@ -28,7 +28,7 @@ const NUM = /-?(?:\d+\.\d*|\.\d+|\d+)(?:[eE][-+]?\d+)?/g;
 
 interface Norm {
   tag: string;
-  attrs: Array<[string, string, number[]]>;
+  attrs: Array<[string, string, number[], string[]]>;
   kids: Norm[];
   text: string;
 }
@@ -40,7 +40,12 @@ function norm(n: XmlNode): Norm | null {
     .filter(([k]) => !k.startsWith('xmlns'))
     .map(
       ([k, v]) =>
-        [k, v.replace(NUM, '#'), (v.match(NUM) ?? []).map(Number)] as [string, string, number[]],
+        [k, v.replace(NUM, '#'), (v.match(NUM) ?? []).map(Number), v.match(NUM) ?? []] as [
+          string,
+          string,
+          number[],
+          string[],
+        ],
     )
     .sort((a, b) => (a[0] < b[0] ? -1 : 1));
   const kids = n.children.map(norm).filter((x): x is Norm => x !== null);
@@ -57,10 +62,19 @@ function diff(a: Norm, b: Norm, path: string): string | null {
   const kb = b.attrs.map((x) => x[0]).join(',');
   if (ka !== kb) return `${path}: atributos [${ka}] vs [${kb}]`;
   for (let i = 0; i < a.attrs.length; i++) {
-    const [k, sa, na] = a.attrs[i] as [string, string, number[]];
-    const [, sb, nb] = b.attrs[i] as [string, string, number[]];
+    const [k, sa, na] = a.attrs[i] as [string, string, number[], string[]];
+    const [, sb, nb] = b.attrs[i] as [string, string, number[], string[]];
     if (sa !== sb) return `${path}@${k}: '${sa}' vs '${sb}'`;
+    const [, , , tka] = a.attrs[i] as [string, string, number[], string[]];
+    const [, , , tkb] = b.attrs[i] as [string, string, number[], string[]];
     for (let j = 0; j < na.length; j++) {
+      const ta = tka[j] as string;
+      const tb = tkb[j] as string;
+      // Tolerancia SÓLO para números con decimales (redondeo a 2 del emisor).
+      // Un token entero debe coincidir como texto: '00' ≠ '0' (#ffff00 vs
+      // #ffff0 pasaba como «0 == 0» y escondió una cinta negra en el BWT).
+      const decimal = ta.includes('.') || tb.includes('.');
+      if (!decimal && ta !== tb) return `${path}@${k}: '${ta}' vs '${tb}'`;
       if (Math.abs((na[j] as number) - (nb[j] as number)) > 0.006)
         return `${path}@${k}: ${na[j]} vs ${nb[j]}`;
     }
@@ -72,6 +86,17 @@ function diff(a: Norm, b: Norm, path: string): string | null {
   }
   return null;
 }
+
+describe('regresión visual', () => {
+  it('la cinta del BWT es amarilla (#ffff00), no negra', () => {
+    const out = drawIconShape(
+      { id: 'a', x: 0, y: 0, type: 'turbina', color: 'gray' },
+      null,
+      new Log(),
+    );
+    expect(out.body).toContain('fill="#ffff00"');
+  });
+});
 
 describe(`iconos ≡ draw_icon_shape del oráculo (${golden.rows.length} casos)`, () => {
   for (const r of golden.rows) {

@@ -59,6 +59,11 @@ def tokens(value: str, vx: str, vy: str):
         raise SystemExit(f'ICONID embebido en un atributo no previsto: {value!r}')
     if value == 'ICONID':
         return [{'c': 'id'}]
+    # Un atributo que no depende de la posición queda LITERAL: tokenizar sus
+    # números rompe colores como '#ffff00' (el '00' salía '0' → '#ffff0',
+    # inválido → negro). Lo detectó la verificación visual (PNG mirado).
+    if value == vx == vy:
+        return [value]
     a, b, c = (NUM.findall(v) for v in (value, vx, vy))
     sa, sb = NUM.split(value), NUM.split(vx)
     if sa != sb or len(a) != len(b) or len(a) != len(c):
@@ -168,7 +173,7 @@ def evaluate(node, x, y):
         s = ''
         for p in parts:
             if isinstance(p, str):
-                s += p
+                s += NUM.sub(lambda m: fmt(float(m.group(0))), p)
             elif 'n' in p:
                 s += fmt(p['n'])
             elif 'x' in p:
