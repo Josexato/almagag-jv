@@ -1,0 +1,475 @@
+{
+  "canvas": {
+    "flow": "up",
+    "legend": [
+      {
+        "label": "◉ con datos",
+        "color": "#2e7d32"
+      },
+      {
+        "label": "◪ parcial",
+        "color": "#b8860b"
+      },
+      {
+        "label": "▢ en cero",
+        "color": "#757575"
+      }
+    ]
+  },
+  "elements": [
+    {
+      "id": "resumen",
+      "type": "building",
+      "label": "Resumen\nconsolidado E+P+C\ncond. comerciales §5",
+      "color": "#1F3864",
+      "status": "partial"
+    },
+    {
+      "id": "fza",
+      "type": "user",
+      "label": "Fza Laboral\ndesde Formato 1-3",
+      "color": "#8FAADC",
+      "status": "ok"
+    },
+    {
+      "id": "cron",
+      "type": "document",
+      "label": "Cron. Val.\ndesde hitos H1–H7",
+      "color": "#8FAADC",
+      "status": "partial"
+    },
+    {
+      "id": "pareto",
+      "type": "document",
+      "label": "Paretto\nderiva del consolidado",
+      "color": "#8FAADC",
+      "status": "empty"
+    },
+    {
+      "id": "ring",
+      "type": "document",
+      "label": "Resumen Ingeniería\ncon datos",
+      "color": "#2E75B6",
+      "status": "ok"
+    },
+    {
+      "id": "ing",
+      "type": "database",
+      "label": "Ingeniería\ncivil · eléctrica · telecom\nUS$ 56 K cotizados",
+      "color": "#2E75B6",
+      "status": "ok"
+    },
+    {
+      "id": "rproc",
+      "type": "document",
+      "label": "Resumen Procura\npartidas 1.10 a 1.50\nleasing en 1.40",
+      "color": "#ED7D31",
+      "status": "partial"
+    },
+    {
+      "id": "dproc",
+      "type": "database",
+      "label": "Detalle Procura\nP.U.D. · G.G. · UTILIDAD\nfalta utilidad",
+      "color": "#ED7D31",
+      "status": "partial"
+    },
+    {
+      "id": "mproc",
+      "type": "database",
+      "label": "Material Procura\nmapeada · cotización",
+      "color": "#ED7D31",
+      "status": "ok"
+    },
+    {
+      "id": "eproc",
+      "type": "database",
+      "label": "Equipo Procura\nmapeada · cotización",
+      "color": "#ED7D31",
+      "status": "ok"
+    },
+    {
+      "id": "constr",
+      "type": "building",
+      "label": "Construcción\ncosto directo + indirectos + UTILIDAD",
+      "color": "#C00000"
+    },
+    {
+      "id": "ppto",
+      "type": "database",
+      "label": "Presupuesto\npartidas y metrados\nmetrados a corregir 11+3",
+      "color": "#C00000",
+      "status": "partial"
+    },
+    {
+      "id": "dppto",
+      "type": "database",
+      "label": "Detalle Ppto\nAPU por partida\nderiva de recursos",
+      "color": "#C00000",
+      "status": "empty"
+    },
+    {
+      "id": "mo",
+      "type": "user",
+      "label": "Mano de Obra\ncuadrillas\nEN CERO · InteCo",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "mat",
+      "type": "database",
+      "label": "Material\nEN CERO · InteCo",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "eq",
+      "type": "server",
+      "label": "Equipo y combustible\nEN CERO · InteCo",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "sub",
+      "type": "database",
+      "label": "Subcontratos\nEN CERO · InteCo",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "pulab",
+      "type": "database",
+      "label": "P.U. Labor\ntarifa por categoría\nEN CERO · InteCo",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "tareq",
+      "type": "database",
+      "label": "Tarifa Equipos\nhora-máquina\nEN CERO · InteCo",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "gg",
+      "type": "database",
+      "label": "Gastos Generales\n21 conceptos\nEN CERO · InteCo+C&D",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "sup",
+      "type": "user",
+      "label": "Supervisión\nEN CERO",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "seg",
+      "type": "database",
+      "label": "Seguridad\nEN CERO",
+      "color": "#548B54",
+      "status": "empty"
+    },
+    {
+      "id": "indir",
+      "type": "document",
+      "label": "Indirectos de obra",
+      "color": "#548B54",
+      "contains": [
+        "gg",
+        "sup",
+        "seg"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "pulab",
+      "to": "mo",
+      "direction": "forward",
+      "semantic_type": "dependency",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "tareq",
+      "to": "eq",
+      "direction": "forward",
+      "semantic_type": "dependency",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "mo",
+      "to": "dppto",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "mat",
+      "to": "dppto",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "eq",
+      "to": "dppto",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "sub",
+      "to": "dppto",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "dppto",
+      "to": "ppto",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "ppto",
+      "to": "constr",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "mproc",
+      "to": "dproc",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "eproc",
+      "to": "dproc",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "dproc",
+      "to": "rproc",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "ing",
+      "to": "ring",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "ring",
+      "to": "resumen",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "rproc",
+      "to": "resumen",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "constr",
+      "to": "resumen",
+      "direction": "forward",
+      "semantic_type": "data_link",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "resumen",
+      "to": "cron",
+      "direction": "forward",
+      "style": "dashed",
+      "semantic_type": "event",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "resumen",
+      "to": "pareto",
+      "direction": "forward",
+      "style": "dashed",
+      "semantic_type": "event",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "resumen",
+      "to": "fza",
+      "direction": "forward",
+      "style": "dashed",
+      "semantic_type": "event",
+      "routing": {
+        "type": "orthogonal",
+        "corner_radius": 10,
+        "preference": "vertical"
+      }
+    },
+    {
+      "from": "indir",
+      "to": "constr",
+      "direction": "forward",
+      "semantic_type": "data_link"
+    }
+  ],
+  "journeys": [
+    {
+      "id": "f1",
+      "label": "Cadena Construcción",
+      "color": "#C00000",
+      "path": [
+        "mo",
+        "dppto",
+        "ppto",
+        "constr",
+        "resumen"
+      ]
+    },
+    {
+      "id": "f2",
+      "label": "Cadena Procura",
+      "color": "#ED7D31",
+      "path": [
+        "mproc",
+        "dproc",
+        "rproc",
+        "resumen"
+      ]
+    },
+    {
+      "id": "f3",
+      "label": "Cadena Ingeniería",
+      "color": "#2E75B6",
+      "path": [
+        "ing",
+        "ring",
+        "resumen"
+      ]
+    }
+  ],
+  "considerations": [
+    {
+      "align": [
+        "pulab",
+        "tareq",
+        "mproc",
+        "eproc",
+        "ing"
+      ],
+      "axis": "y"
+    },
+    {
+      "align": [
+        "mo",
+        "eq",
+        "mat",
+        "sub",
+        "dproc",
+        "ring"
+      ],
+      "axis": "y"
+    },
+    {
+      "align": [
+        "dppto",
+        "rproc"
+      ],
+      "axis": "y"
+    },
+    {
+      "align": [
+        "fza",
+        "cron",
+        "pareto"
+      ],
+      "axis": "y"
+    },
+    {
+      "align": [
+        "dppto",
+        "ppto",
+        "constr"
+      ],
+      "axis": "x"
+    }
+  ]
+}
