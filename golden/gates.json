@@ -1,6 +1,6 @@
 {
-  "_comment": "Compuertas del golden por fase. Una compuerta activa que falla rompe la CI. Las métricas de calidad entran a medida que el motor las produce: cruces/arista×nodo/labels ≤ referencia (misma regla, A3); tinta/aspecto en ±15%.",
-  "phase": 0,
+  "_comment": "Compuertas del golden por fase. Una compuerta activa que falla rompe la CI. Las métricas de calidad entran a medida que el motor las produce: cruces/arista×nodo/labels ≤ referencia (misma regla, A3); tinta/aspecto en ±15%. Fase 1: + mensajes (preprocesado con compuerta idéntico al oráculo, golden/preproc-v3.20.0.json).",
+  "phase": 1,
   "gates": {
     "procedencia": true,
     "sha256_fixture": true,
@@ -8,6 +8,7 @@
     "svg_valido": true,
     "motor": true,
     "determinismo": true,
+    "mensajes": true,
     "cruces": false,
     "arista_nodo": false,
     "labels": false,

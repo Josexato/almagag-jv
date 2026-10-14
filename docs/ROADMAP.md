@@ -10,7 +10,7 @@ como fase final con su propio golden.
 | Fase | Contenido | Cierre medible | Bloques | Estado |
 |---|---|---|---|---|
 | **0 · Esqueleto** | Repo strict, build dual, CI, CLI mínimo, harness golden, corpus de constructos | ver «Cierre fase 0» | 1–2 | ✅ v0.0.1 |
-| **1 · Formato + validación + emisión mínima** | Normalizador con el «schema que habla» (mismos `[schema]`/`[formato]`), `unions`, `theme`, `semantics`, iconos como datos, BWT §O55, O50/O51/O56 sobre colocación trivial | Mismos WARNING `[schema]` que el oráculo en los 67 fixtures; PNG mirado | 2 | — |
+| **1 · Formato + validación + emisión mínima** | Normalizador con el «schema que habla» (mismos `[schema]`/`[formato]`), `unions`, `theme`, `semantics`, iconos como datos, BWT §O55, O50/O51/O56 sobre colocación trivial | Mismos WARNING `[schema]` que el oráculo en los 67 fixtures; PNG mirado | 2 | ✅ v0.1.0 |
 | **2 · Layout** | Niveles/SCC, columnas, contenedores rígidos, áreas, partition con compactación por intervalos, zonas near/banda, serpenteo, genealogías, **vistas `lanes` y `matrix`** | tinta/aspecto ±15%; propiedades de partition/serpentina/peine; **presupuesto de performance** (abajo) | 4–6 | — |
 | **3 · Ruteo** | Puertos, corredores, bus, abanico, ortogonal, dodge + recorte de codos sobre `ObstacleIndex` | cruces/arista×nodo/labels ≤ referencia (misma regla, A3) | 3–4 | — |
 | **4 · Emisión completa** | Leyendas, journeys/bandas, callouts, banda de contrato, O52 | O-contratos sobre el SVG; PNG de los 67 fixtures | 2 | — |
@@ -43,6 +43,7 @@ fase 2 con números, no en la 5.
 | `--centrality-*` | ❌ fuera de alcance — hiperparámetros de `legacy` |
 | `layout_template` (`architecture`, `steps`, `hub_and_spoke`, `dashboard`, `er`, `sequence`, `state`) | fase 2 (perfil auto); `steps` ya en el corpus (c09) |
 
-## Cierre fase 0 (v0.0.1)
+## Cierres
 
-Ver `docs/reportes/FASE-0.md`.
+- Fase 0 (v0.0.1): `docs/reportes/FASE-0.md`.
+- Fase 1 (v0.1.0): `docs/reportes/FASE-1.md`.

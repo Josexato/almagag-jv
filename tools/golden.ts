@@ -7,6 +7,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { render } from '../src/core/index.ts';
 import { type Gates, loadJson, type Reference, reportMarkdown, runCorpus } from './golden-lib.ts';
+import type { PreprocRow } from './preproc-lib.ts';
 
 const CORPUS: ReadonlyArray<[string, string]> = [
   ['py-v3.20.0', 'golden/reference-v3.20.0.json'],
@@ -15,9 +16,21 @@ const CORPUS: ReadonlyArray<[string, string]> = [
 
 const pinned = loadJson<{ version: string; commit: string }>('golden/PROVENANCE.json');
 const gates = loadJson<Gates>('golden/gates.json');
+const preproc = loadJson<{ rows: PreprocRow[] }>('golden/preproc-v3.20.0.json');
+const oracleLogs = new Map(
+  preproc.rows
+    .filter((r) => r.origin !== 'casos')
+    .map((r) => [`${r.origin}/${r.name}`, r.log] as const),
+);
 const results = CORPUS.flatMap(([name, path]) =>
-  runCorpus('.', name, loadJson<Reference>(path), pinned, gates, (input, opts) =>
-    render(input, opts),
+  runCorpus(
+    '.',
+    name,
+    loadJson<Reference>(path),
+    pinned,
+    gates,
+    (input, opts) => render(input, opts),
+    oracleLogs,
   ),
 );
 const md = reportMarkdown(results, gates);
@@ -30,9 +43,12 @@ const motorOk = results.filter(
   (r) => r.ref.motor && !('error' in r.ts) && r.ts.profile === r.ref.motor,
 ).length;
 const withMotor = results.filter((r) => r.ref.motor).length;
+const msgs = results.reduce((n, r) => n + ('error' in r.ts ? 0 : (r.ts.messages ?? 0)), 0);
+const withMsgs = results.filter((r) => !('error' in r.ts) && r.ts.messages !== null).length;
 console.log(
   `golden fase ${gates.phase} (referencia AlmaGag Python v${pinned.version}@${pinned.commit.slice(0, 7)}): ` +
     `${results.length} fixtures, motor ${motorOk}/${withMotor} igual a la referencia, ` +
+    `${msgs} mensajes con compuerta idénticos en ${withMsgs} fixtures, ` +
     `${fails.length} con fallas → ${reportPath}`,
 );
 for (const f of fails) console.error(`FALLA ${f.corpus}/${f.fixture}: ${f.failures.join('; ')}`);

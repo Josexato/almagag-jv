@@ -28,12 +28,18 @@ export type EdgeId = `e${number}`;
 
 export interface SceneNode {
   readonly id: NodeId;
+  /** id declarado por el autor (texto), para el SVG (`<g id>`, gradientes). */
+  readonly authorId: string;
   readonly type: string;
   readonly label: string;
-  readonly color: string;
+  /** `element.get('color', 'gray')`; null = color inválido declarado. */
+  readonly color: string | null;
+  readonly status: string;
   readonly box: Box;
   /** Coordenadas declaradas por el autor (compatibilidad heredada, H5). */
   readonly pinned: boolean;
+  /** Elemento con `contains`: no es icono (el oráculo lo dibuja por la vía de contenedores). */
+  readonly isContainer: boolean;
 }
 
 export type Route =

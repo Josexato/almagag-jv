@@ -1,6 +1,6 @@
 {
   "name": "almagag-jv",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "AlmaGag en TypeScript: JSON declarativo (.sdjf/.gag) → SVG, en browser y Node. Referencia: AlmaGag Python v3.20.0.",
   "license": "MIT",
   "author": "José Cáceres (@Josexato)",
@@ -37,7 +37,8 @@
     "png": "node --experimental-strip-types tools/render-png.ts",
     "ci": "npm run typecheck && npm run lint && npm test && npm run build && npm run golden && npm run bench",
     "bench": "node --experimental-strip-types tools/bench.ts",
-    "smoke:browser": "node --experimental-strip-types tools/browser-smoke.ts"
+    "smoke:browser": "node --experimental-strip-types tools/browser-smoke.ts",
+    "prueba": "node tools/build-prueba.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",

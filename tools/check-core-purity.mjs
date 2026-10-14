@@ -21,7 +21,10 @@ function walk(dir) {
       readFileSync(p, 'utf8')
         .split('\n')
         .forEach((line, i) => {
-          for (const re of BANNED) if (re.test(line)) bad.push(`${p}:${i + 1}: ${line.trim()}`);
+          const t = line.trim();
+          // Los comentarios pueden NOMBRAR lo prohibido (p. ej. «sin DOMParser»).
+          if (t.startsWith('*') || t.startsWith('//') || t.startsWith('/*')) return;
+          for (const re of BANNED) if (re.test(line)) bad.push(`${p}:${i + 1}: ${t}`);
         });
     }
   }

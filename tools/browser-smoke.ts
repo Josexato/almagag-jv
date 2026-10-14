@@ -49,7 +49,7 @@ const r = await page.evaluate(
       ms,
       len: out.svg.length,
       profile: out.profile,
-      nodes: (out.svg.match(/class="ag-node"/g) ?? []).length,
+      nodes: (out.svg.match(/<g id="/g) ?? []).length,
     };
   },
   { src: input, url: `http://127.0.0.1:${port}/index.js` },

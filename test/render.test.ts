@@ -52,14 +52,28 @@ describe('render (fase 0)', () => {
     expect(() => render(JSON.stringify({ elements: [], flows: [] }))).toThrow(FormatError);
     expect(() => render(JSON.stringify({ elements: [], flows: [] }))).toThrow(/journeys/);
   });
-  it('JSON roto y elements ausente → FormatError nombrado', () => {
+  it('JSON roto y elemento sin id → FormatError nombrado (el oráculo revienta con traceback)', () => {
     expect(() => render('{')).toThrow(/JSON inválido/);
-    expect(() => render('{}')).toThrow(/falta 'elements'/);
-    expect(() => render('{"elements":[{"type":"x"}]}')).toThrow(/elements\[0\]/);
+    expect(() => render('[]')).toThrow(/raíz del documento/);
+    expect(() => render('{"elements":[{"type":"x"}]}')).toThrow(/elements\[0\] sin 'id'/);
+    expect(() => render('{"elements":[{"id":"a"}],"connections":[{"from":"a"}]}')).toThrow(
+      /sin 'to'/,
+    );
+  });
+  it("lo que el oráculo acepta, se acepta: '{}' vacío, ids numéricos, NaN", () => {
+    expect(svgIsValid(render('{}').svg)).toBe(true);
+    expect(
+      render('{"elements":[{"id":1},{"id":2}],"connections":[{"from":1,"to":2}]}').svg,
+    ).toContain('ag-edge');
+    expect(svgIsValid(render('{"elements":[{"id":"a","x":NaN,"y":1}]}').svg)).toBe(true);
   });
   it('respeta x/y declarados (compatibilidad heredada)', () => {
-    const { svg } = render(JSON.stringify({ elements: [{ id: 'a', x: 321, y: 123 }] }));
+    const { svg } = render(
+      JSON.stringify({ elements: [{ id: 'a', type: 'server', x: 321, y: 123 }] }),
+    );
     expect(svg).toContain('x="321" y="123"');
+    const bwt = render(JSON.stringify({ elements: [{ id: 'a', x: 321, y: 123 }] })).svg;
+    expect(bwt).toContain('translate(321,123)');
   });
 });
 
@@ -97,5 +111,21 @@ describe('CLI', () => {
       expect(err.status).toBe(1);
       expect(err.stderr).toMatch(/'flows' se renombró a 'journeys'/);
     }
+  });
+});
+
+describe('contenedores en fase 1', () => {
+  it('un contenedor no es icono: ni §O55 ni BWT (falso aviso detectado al mirar c18)', () => {
+    const r = render(
+      JSON.stringify({
+        elements: [
+          { id: 'z', type: 'area', label: 'Zona', contains: ['a'] },
+          { id: 'a', type: 'server' },
+        ],
+      }),
+    );
+    expect(r.log.some((l) => l.msg.startsWith('§O55'))).toBe(false);
+    expect(r.svg).toContain('ag-container-provisional');
+    expect(r.log.some((l) => l.msg.includes('1 contenedor(es) como caja provisional'))).toBe(true);
   });
 });

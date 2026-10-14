@@ -5,8 +5,9 @@ Reescritura en TypeScript, para browser y Node, del motor de diagramas
 string SVG, sin DOM ni filesystem en el núcleo.
 
 - **Referencia (oráculo congelado):** AlmaGag Python **v3.20.0** — `golden/PROVENANCE.json`.
-- **Versión:** 0.0.1 — fase 0 cerrada (esqueleto). El motor todavía emite una
-  colocación trivial; ver [`docs/ROADMAP.md`](docs/ROADMAP.md).
+- **Versión:** 0.1.0 — fase 1 cerrada: formato, validación y emisión mínima
+  (iconos reales, §O50/§O51/§O55/§O56) ≡ oráculo; colocación todavía trivial.
+  Ver [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
 ```bash
 npm ci
@@ -28,3 +29,4 @@ const { svg, profile, log } = render(jsonString, { view: 'auto' });
 | [`docs/HALLAZGOS-PYTHON.md`](docs/HALLAZGOS-PYTHON.md) | bugs del oráculo encontrados midiendo |
 | [`golden/REFERENCE-v3.20.0.md`](golden/REFERENCE-v3.20.0.md) | tablas golden de ambos corpus |
 | [`docs/reportes/FASE-0.md`](docs/reportes/FASE-0.md) | cierre de la fase 0 con números |
+| [`docs/reportes/FASE-1.md`](docs/reportes/FASE-1.md) | cierre de la fase 1 con números |

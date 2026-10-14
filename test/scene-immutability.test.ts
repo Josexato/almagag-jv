@@ -27,11 +27,14 @@ const arbScene = fc
     makeScene(
       Array.from({ length: n }, (_, i) => ({
         id: `n${i}`,
+        authorId: `n${i}`,
         type: 'server',
         label: `N${i}`,
         color: 'gray',
+        status: '',
         box: { x: xs[i] ?? 0, y: i * 10, w: 80, h: 50 },
         pinned: false,
+        isContainer: false,
       })),
       edges.map(([a, b], i) => ({
         id: `e${i}` as EdgeId,
@@ -133,19 +136,25 @@ describe('A1 · escena inmutable', () => {
       [
         {
           id: 'a',
+          authorId: 'a',
+          status: '',
           type: 'server',
           label: 'A',
           color: 'gray',
           box: { x: 0, y: 0, w: 80, h: 50 },
           pinned: false,
+          isContainer: false,
         },
         {
           id: 'b',
+          authorId: 'b',
+          status: '',
           type: 'server',
           label: 'B',
           color: 'gray',
           box: { x: 200, y: 0, w: 80, h: 50 },
           pinned: false,
+          isContainer: false,
         },
       ],
       [
