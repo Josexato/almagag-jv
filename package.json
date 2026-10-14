@@ -37,7 +37,8 @@
     "png": "node --experimental-strip-types tools/render-png.ts",
     "ci": "npm run typecheck && npm run lint && npm test && npm run build && npm run golden && npm run bench",
     "bench": "node --experimental-strip-types tools/bench.ts",
-    "smoke:browser": "node --experimental-strip-types tools/browser-smoke.ts"
+    "smoke:browser": "node --experimental-strip-types tools/browser-smoke.ts",
+    "prueba": "node tools/build-prueba.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
