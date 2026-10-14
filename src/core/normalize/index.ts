@@ -4,6 +4,7 @@
  * → theme §O57 → select_strategy (§O53) → avisos de template → modelo tipado.
  */
 
+import { type Embedded, type EmbeddedNames, unresolvedIconTypes } from '../icons/index.ts';
 import { FormatError, type Log } from '../log.ts';
 import { buildDiagram, type Diagram } from '../model/diagram.ts';
 import { JsonSyntaxError, type ParsedJson, parseJson } from '../parse/json.ts';
@@ -21,6 +22,7 @@ export interface Normalized {
   readonly profile: Profile;
   readonly unions: UnionInfo;
   readonly diagram: Diagram;
+  readonly icons: Embedded | null;
 }
 
 /** Templates que el oráculo reconoce (layout/templates). Se aplican en la fase 2. */
@@ -58,8 +60,46 @@ export function normalize(text: string, view: View, log: Log): Normalized {
   applyTheme(doc, log);
   const profile = selectStrategy(doc, view, log);
   templateNotices(doc, parsed, profile, log);
+  const embedded = embeddedIcons(doc, log);
   const diagram = buildDiagram(doc, parsed, unions, log);
-  return { parsed, doc, profile, unions, diagram };
+  const bwt = unresolvedIconTypes(diagram.elements, embedded.names);
+  if (bwt.length) {
+    log.info(`§Q64: ${bwt.length} type(s) en BWT (inventario para el catálogo): ${bwt.join(', ')}`);
+  }
+  return { parsed, doc, profile, unions, diagram, icons: embedded.map };
+}
+
+/**
+ * `icons{}` del archivo. El conteo usa len() de Python sobre lo declarado
+ * (aunque la forma sea incorrecta, como el oráculo); para DIBUJAR sólo valen
+ * entradas str→str.
+ */
+function embeddedIcons(doc: Doc, log: Log): { map: Embedded | null; names: EmbeddedNames } {
+  const icons = doc.get('icons');
+  if (!truthy(icons)) return { map: null, names: null };
+  const len = isDict(icons)
+    ? icons.size
+    : isList(icons)
+      ? icons.length
+      : typeof icons === 'string'
+        ? [...icons].length
+        : 0;
+  if (len) log.info(`${len} icono(s) SVG embebido(s) detectado(s)`);
+  if (!isDict(icons)) {
+    const names = isList(icons)
+      ? new Set(icons.filter((x): x is string => typeof x === 'string'))
+      : null;
+    return { map: null, names };
+  }
+  const map = new Map<string, string>();
+  for (const [k, v] of icons) {
+    if (typeof v === 'string') map.set(k, v);
+    else
+      log.warning(
+        `[jv] icons['${k}'] no es un string SVG — se ignora (el oráculo revienta al dibujarlo)`,
+      );
+  }
+  return { map, names: new Set(icons.keys()) };
 }
 
 /**

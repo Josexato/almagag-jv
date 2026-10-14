@@ -28,6 +28,8 @@ export const GATED: readonly RegExp[] = [
   /^(INFO|WARNING)\|§O53: /,
   /^INFO\|Layout template '.*' omitido: /,
   /^WARNING\|Layout template '.*' desconocido/,
+  /^INFO\|\d+ icono\(s\) SVG embebido\(s\) detectado\(s\)$/,
+  /^INFO\|§Q64: /,
 ];
 
 export const isGated = (line: string): boolean => GATED.some((re) => re.test(line));

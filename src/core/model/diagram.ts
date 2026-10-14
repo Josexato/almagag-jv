@@ -18,7 +18,9 @@ export interface DElement {
   readonly key: string; // clave de identidad Python (1 == 1.0)
   readonly type: string;
   readonly label: string;
+  /** `element.get('color', 'gray')`; null = color no-texto (el oráculo revienta al dibujar). */
   readonly color: string | null;
+  readonly isContainer: boolean;
   readonly x: number | null;
   readonly y: number | null;
   readonly isUnion: boolean;
@@ -73,7 +75,12 @@ export function buildDiagram(doc: Doc, p: ParsedJson, unions: UnionInfo, log: Lo
         key,
         type: typeof e.get('type') === 'string' ? (e.get('type') as string) : 'unknown',
         label,
-        color: typeof e.get('color') === 'string' ? (e.get('color') as string) : null,
+        color: !e.has('color')
+          ? 'gray'
+          : typeof e.get('color') === 'string'
+            ? (e.get('color') as string)
+            : null,
+        isContainer: e.has('contains'),
         x: num(e.get('x')),
         y: num(e.get('y')),
         isUnion: unions.unionNodes.has(key) && e.get('type') === 'union',
