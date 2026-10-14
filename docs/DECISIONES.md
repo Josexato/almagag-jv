@@ -41,6 +41,23 @@ razón) o **heredada** (contrato del Python que se conserva a propósito).
   de constructos declara la vista en `fixtures/constructos/views.json`, fuera
   del `.sdjf` (frontera §R).
 
+## Fase 1
+
+- **D-01 · El preprocesado imita la semántica de Python, no la de JS.**
+  Parser JSON propio (≡ `json.loads`, objetos como `Map` para el orden del
+  dict, int/float distinguidos, NaN/Infinity), truthiness de Python, `str()`/
+  `repr()`/`sorted()`/`.lower()` de CPython. Razón: los mensajes del schema
+  son contrato carácter a carácter (857 comparados).
+- **D-02 · Iconos extraídos del oráculo, no transcritos** (A5 llevado a
+  datos): `golden/scripts/extract_icons.py` verifica linealidad en x,y y
+  predice una tercera posición antes de escribir las plantillas.
+- **D-03 · El TS es «igual o mejor» donde el oráculo revienta o calla**, y
+  lo nombra con la etiqueta `[jv]`, que queda FUERA de la igualdad de
+  mensajes (se cuenta aparte): 14 diagnósticos en 370 documentos.
+- **D-04 · El post-proceso de emisión es el del oráculo** (finalize_svg:
+  O51 + O50 sobre el árbol SVG), portado y verificado (400/400). En A3 se
+  reemplaza por el cálculo sobre la DrawList, con este golden como juez.
+
 ## Nombre
 
 Repo, paquete npm y CLI: **`almagag-jv`** (un nombre, una cosa).

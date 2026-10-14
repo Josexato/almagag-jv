@@ -1,6 +1,6 @@
 {
   "name": "almagag-jv",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "AlmaGag en TypeScript: JSON declarativo (.sdjf/.gag) → SVG, en browser y Node. Referencia: AlmaGag Python v3.20.0.",
   "license": "MIT",
   "author": "José Cáceres (@Josexato)",
