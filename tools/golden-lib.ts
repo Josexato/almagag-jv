@@ -7,6 +7,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { compareTagged, isGated } from './preproc-lib.ts';
 import { svgIsValid } from './svg-check.ts';
 
 export { svgIsValid };
@@ -47,6 +48,8 @@ export interface TsRun {
   svg: string;
   ms: number;
   deterministic: boolean;
+  /** Mensajes con compuerta comparados con el oráculo (null = sin referencia). */
+  messages: number | null;
 }
 
 export interface RowResult {
@@ -60,7 +63,10 @@ export interface RowResult {
 export type RenderFn = (
   input: string,
   opts: { view: RefRow['view'] },
-) => { svg: string; profile: 'auto' | 'hier' };
+) => { svg: string; profile: 'auto' | 'hier'; log: ReadonlyArray<{ level: string; msg: string }> };
+
+/** Log del oráculo por fixture (golden/preproc-v3.20.0.json), para la compuerta `mensajes`. */
+export type OracleLogs = ReadonlyMap<string, readonly string[]>;
 
 export function sha256(data: string | Buffer): string {
   return createHash('sha256').update(data).digest('hex');
@@ -77,6 +83,7 @@ export function runCorpus(
   pinned: { version: string; commit: string },
   gates: Gates,
   render: RenderFn,
+  oracleLogs: OracleLogs = new Map(),
 ): RowResult[] {
   const g = gates.gates;
   const out: RowResult[] = [];
@@ -101,7 +108,21 @@ export function runCorpus(
       const a = render(text, { view: row.view });
       const ms = performance.now() - t0;
       const b = render(text, { view: row.view });
-      ts = { profile: a.profile, svg: a.svg, ms, deterministic: a.svg === b.svg };
+      const pyLog = oracleLogs.get(`${ref.fixtures_dir}/${row.fixture}`);
+      let messages: number | null = null;
+      if (pyLog) {
+        const cmp = compareTagged(
+          pyLog,
+          a.log.map((l) => `${l.level}|${l.msg}`),
+        );
+        messages = pyLog.filter(isGated).length;
+        if (g['mensajes'] && !cmp.ok) {
+          failures.push(
+            `mensajes: oráculo ${JSON.stringify(cmp.py)} ≠ TS ${JSON.stringify(cmp.ts)}`,
+          );
+        }
+      }
+      ts = { profile: a.profile, svg: a.svg, ms, deterministic: a.svg === b.svg, messages };
       if (g['svg_valido'] && !svgIsValid(a.svg))
         failures.push('svg_valido: SVG sin raíz/viewBox válido');
       if (g['determinismo'] && !ts.deterministic)
@@ -131,14 +152,14 @@ export function reportMarkdown(results: RowResult[], gates: Gates): string {
     '',
     `Compuertas activas: ${active.join(', ')}.`,
     '',
-    '| corpus | fixture | vista | motor ref | motor TS | cruces ref | a×n ref | labels ref | ms py | ms TS | resultado |',
-    '|---|---|---|---|---|---:|---:|---:|---:|---:|---|',
+    '| corpus | fixture | vista | motor ref | motor TS | mensajes ≡ | cruces ref | a×n ref | labels ref | ms py | ms TS | resultado |',
+    '|---|---|---|---|---|---:|---:|---:|---:|---:|---:|---|',
   ];
   for (const r of results) {
     const ts = 'error' in r.ts ? null : r.ts;
     lines.push(
       `| ${r.corpus} | ${r.fixture} | ${r.ref.view} | ${r.ref.motor ?? `ERROR (${(r.ref.error ?? '').split(':')[0]})`} | ` +
-        `${ts?.profile ?? 'ERROR'} | ${fmt(r.ref.cruces)} | ${fmt(r.ref.arista_nodo)} | ${fmt(r.ref.labels)} | ` +
+        `${ts?.profile ?? 'ERROR'} | ${ts?.messages ?? '—'} | ${fmt(r.ref.cruces)} | ${fmt(r.ref.arista_nodo)} | ${fmt(r.ref.labels)} | ` +
         `${fmt(r.ref.render_ms)} | ${ts ? ts.ms.toFixed(1) : '—'} | ${r.failures.length ? `FALLA: ${r.failures.join('; ')}` : 'ok'} |`,
     );
   }

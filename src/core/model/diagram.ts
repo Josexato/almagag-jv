@@ -8,7 +8,7 @@
  */
 
 import { FormatError, type Log } from '../log.ts';
-import { type Doc, idKey, isDict, isList, pyIter } from '../normalize/py.ts';
+import { type Doc, idKey, isDict, isList, pyIter, pyLower } from '../normalize/py.ts';
 import type { UnionInfo } from '../normalize/vocab.ts';
 import type { Json, ParsedJson } from '../parse/json.ts';
 import { pyStr } from '../parse/pyrepr.ts';
@@ -24,6 +24,8 @@ export interface DElement {
   readonly x: number | null;
   readonly y: number | null;
   readonly isUnion: boolean;
+  /** str(element.get('status', '')).lower() — clave de badge §V82. */
+  readonly status: string;
   readonly raw: ReadonlyMap<string, Json>;
 }
 
@@ -84,6 +86,7 @@ export function buildDiagram(doc: Doc, p: ParsedJson, unions: UnionInfo, log: Lo
         x: num(e.get('x')),
         y: num(e.get('y')),
         isUnion: unions.unionNodes.has(key) && e.get('type') === 'union',
+        status: pyLower(e.has('status') ? pyStr(p, e, 'status') : ''),
         raw: e,
       }),
     );

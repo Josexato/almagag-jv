@@ -33,9 +33,11 @@ export function trivialScene(d: Diagram, log: Log): Scene {
     lastByKey.set(e.key, sid);
     return {
       id: sid,
+      authorId: e.id,
       type: e.type,
-      label: e.isUnion ? '' : e.label || e.id,
-      color: e.color ?? 'gray',
+      label: e.label,
+      color: e.color,
+      status: e.status,
       box: { x, y, w: ICON_W, h: ICON_H },
       pinned,
     };

@@ -68,8 +68,12 @@ describe('render (fase 0)', () => {
     expect(svgIsValid(render('{"elements":[{"id":"a","x":NaN,"y":1}]}').svg)).toBe(true);
   });
   it('respeta x/y declarados (compatibilidad heredada)', () => {
-    const { svg } = render(JSON.stringify({ elements: [{ id: 'a', x: 321, y: 123 }] }));
+    const { svg } = render(
+      JSON.stringify({ elements: [{ id: 'a', type: 'server', x: 321, y: 123 }] }),
+    );
     expect(svg).toContain('x="321" y="123"');
+    const bwt = render(JSON.stringify({ elements: [{ id: 'a', x: 321, y: 123 }] })).svg;
+    expect(bwt).toContain('translate(321,123)');
   });
 });
 
