@@ -52,10 +52,20 @@ describe('render (fase 0)', () => {
     expect(() => render(JSON.stringify({ elements: [], flows: [] }))).toThrow(FormatError);
     expect(() => render(JSON.stringify({ elements: [], flows: [] }))).toThrow(/journeys/);
   });
-  it('JSON roto y elements ausente → FormatError nombrado', () => {
+  it('JSON roto y elemento sin id → FormatError nombrado (el oráculo revienta con traceback)', () => {
     expect(() => render('{')).toThrow(/JSON inválido/);
-    expect(() => render('{}')).toThrow(/falta 'elements'/);
-    expect(() => render('{"elements":[{"type":"x"}]}')).toThrow(/elements\[0\]/);
+    expect(() => render('[]')).toThrow(/raíz del documento/);
+    expect(() => render('{"elements":[{"type":"x"}]}')).toThrow(/elements\[0\] sin 'id'/);
+    expect(() => render('{"elements":[{"id":"a"}],"connections":[{"from":"a"}]}')).toThrow(
+      /sin 'to'/,
+    );
+  });
+  it("lo que el oráculo acepta, se acepta: '{}' vacío, ids numéricos, NaN", () => {
+    expect(svgIsValid(render('{}').svg)).toBe(true);
+    expect(
+      render('{"elements":[{"id":1},{"id":2}],"connections":[{"from":1,"to":2}]}').svg,
+    ).toContain('ag-edge');
+    expect(svgIsValid(render('{"elements":[{"id":"a","x":NaN,"y":1}]}').svg)).toBe(true);
   });
   it('respeta x/y declarados (compatibilidad heredada)', () => {
     const { svg } = render(JSON.stringify({ elements: [{ id: 'a', x: 321, y: 123 }] }));

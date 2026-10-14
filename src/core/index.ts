@@ -5,8 +5,8 @@
 import { emitTrivialSvg } from './emit/svg.ts';
 import { trivialScene } from './layout/trivial.ts';
 import { Log, type LogEntry } from './log.ts';
-import { parseDiagram } from './parse/sdjf.ts';
-import { type Profile, selectStrategy, type View } from './strategy/select.ts';
+import { normalize } from './normalize/index.ts';
+import type { Profile, View } from './strategy/select.ts';
 import { ENGINE_NAME, ENGINE_VERSION, REFERENCE_VERSION } from './version.ts';
 
 export { FormatError, type LogEntry, type LogLevel } from './log.ts';
@@ -25,8 +25,7 @@ export interface RenderResult {
 
 export function render(input: string, opts: RenderOptions = {}): RenderResult {
   const log = new Log();
-  const diagram = parseDiagram(input);
-  const profile = selectStrategy(diagram, opts.view ?? 'auto', log);
+  const { diagram, profile } = normalize(input, opts.view ?? 'auto', log);
   const scene = trivialScene(diagram, log);
   log.warning(
     `[${profile}] fase 0: colocación trivial en grilla — layout, ruteo y audit ` +

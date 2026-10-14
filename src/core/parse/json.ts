@@ -37,13 +37,16 @@ export interface ParsedJson {
 
 export class JsonSyntaxError extends Error {
   override readonly name = 'JsonSyntaxError';
-  constructor(
-    readonly reason: string,
-    readonly line: number,
-    readonly column: number,
-    readonly pos: number,
-  ) {
+  readonly reason: string;
+  readonly line: number;
+  readonly column: number;
+  readonly pos: number;
+  constructor(reason: string, line: number, column: number, pos: number) {
     super(`${reason}: línea ${line} columna ${column} (carácter ${pos})`);
+    this.reason = reason;
+    this.line = line;
+    this.column = column;
+    this.pos = pos;
   }
 }
 

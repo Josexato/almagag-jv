@@ -3,3 +3,6 @@ dist/
 out/
 *.png
 !docs/**/*.png
+out/preproc/
+__pycache__/
+*.pyc

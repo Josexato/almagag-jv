@@ -5,6 +5,7 @@
  */
 
 import type { Log } from '../log.ts';
+import type { Diagram } from '../model/diagram.ts';
 import {
   type EdgeId,
   makeScene,
@@ -12,7 +13,6 @@ import {
   type SceneEdge,
   type SceneNode,
 } from '../model/scene.ts';
-import type { Diagram } from '../parse/sdjf.ts';
 
 export const ICON_W = 80;
 export const ICON_H = 50;
@@ -22,36 +22,38 @@ const MARGIN = 50;
 
 export function trivialScene(d: Diagram, log: Log): Scene {
   const cols = Math.max(1, Math.ceil(Math.sqrt(d.elements.length)));
+  // Ids duplicados: el oráculo dibuja ambos y las conexiones van al ÚLTIMO.
+  const lastByKey = new Map<string, string>();
   const nodes: SceneNode[] = d.elements.map((e, i) => {
-    const pinned = typeof e.x === 'number' && typeof e.y === 'number';
+    const finite = (v: number | null) => v !== null && Number.isFinite(v);
+    const pinned = finite(e.x) && finite(e.y);
     const x = pinned ? (e.x as number) : MARGIN + (i % cols) * CELL_W;
     const y = pinned ? (e.y as number) : MARGIN + Math.floor(i / cols) * CELL_H;
+    const sid = `n${i}`;
+    lastByKey.set(e.key, sid);
     return {
-      id: e.id,
-      type: typeof e.type === 'string' ? e.type : 'unknown',
-      label: typeof e.label === 'string' ? e.label : e.id,
-      color: typeof e['color'] === 'string' ? (e['color'] as string) : 'gray',
+      id: sid,
+      type: e.type,
+      label: e.isUnion ? '' : e.label || e.id,
+      color: e.color ?? 'gray',
       box: { x, y, w: ICON_W, h: ICON_H },
       pinned,
     };
   });
-  const ids = new Set(nodes.map((n) => n.id));
-  const edges: SceneEdge[] = d.connections
-    .map((c, i) => ({
-      id: `e${i}` as EdgeId,
-      from: c.from,
-      to: c.to,
-      label: typeof c.label === 'string' ? c.label : null,
-      route: null,
-    }))
-    .filter((e) => ids.has(e.from) && ids.has(e.to));
-  // Nada se descarta en silencio: la arista con un extremo inexistente se
-  // NOMBRA (en fase 0 incluye las que apuntan a `unions` aún no expandidas).
-  const dropped = d.connections.filter((c) => !ids.has(c.from) || !ids.has(c.to));
+  const edges: SceneEdge[] = [];
+  const dropped: string[] = [];
+  for (const c of d.connections) {
+    const a = lastByKey.get(c.fromKey);
+    const b = lastByKey.get(c.toKey);
+    if (a && b)
+      edges.push({ id: `e${c.index}` as EdgeId, from: a, to: b, label: c.label, route: null });
+    else dropped.push(`${c.from}→${c.to}`);
+  }
+  // Nada se descarta en silencio: la arista con un extremo inexistente se NOMBRA.
   if (dropped.length > 0) {
     log.warning(
       `[fase0] ${dropped.length} arista(s) con extremo inexistente, no dibujada(s): ` +
-        dropped.map((c) => `${c.from}→${c.to}`).join(', '),
+        dropped.join(', '),
     );
   }
   return makeScene(nodes, edges);

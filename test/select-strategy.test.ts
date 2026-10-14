@@ -6,8 +6,10 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Log } from '../src/core/log.ts';
-import { parseDiagram } from '../src/core/parse/sdjf.ts';
+import { normalize } from '../src/core/normalize/index.ts';
 import { selectStrategy, type View } from '../src/core/strategy/select.ts';
+
+const docOf = (text: string) => normalize(text, 'auto', new Log()).doc;
 
 interface Ref {
   fixtures_dir: string;
@@ -19,15 +21,15 @@ for (const path of ['golden/reference-v3.20.0.json', 'golden/constructos-v3.20.0
   describe(`select_strategy vs oráculo · ${path}`, () => {
     for (const row of ref.rows.filter((r) => r.motor)) {
       it(`${row.fixture} → ${row.motor}`, () => {
-        const d = parseDiagram(readFileSync(join(ref.fixtures_dir, row.fixture), 'utf8'));
-        expect(selectStrategy(d, row.view, new Log())).toBe(row.motor);
+        const text = readFileSync(join(ref.fixtures_dir, row.fixture), 'utf8');
+        expect(normalize(text, row.view, new Log()).profile).toBe(row.motor);
       });
     }
   });
 }
 
 describe('§O53 — la señal anulada se NOMBRA', () => {
-  const d = (o: object) => parseDiagram(JSON.stringify({ elements: [{ id: 'a' }], ...o }));
+  const d = (o: object) => docOf(JSON.stringify({ elements: [{ id: 'a' }], ...o }));
   it('--view con considerations → WARNING textual del Python', () => {
     const log = new Log();
     expect(selectStrategy(d({ considerations: [{ align: ['a', 'a'] }] }), 'lanes', log)).toBe(
@@ -54,7 +56,7 @@ describe('§O53 — la señal anulada se NOMBRA', () => {
   it('self-loop sin coordenadas → hier; con x/y → auto', () => {
     const loop = { connections: [{ from: 'a', to: 'a' }] };
     expect(selectStrategy(d(loop), 'auto', new Log())).toBe('hier');
-    const pinned = parseDiagram(JSON.stringify({ elements: [{ id: 'a', x: 1, y: 1 }], ...loop }));
+    const pinned = docOf(JSON.stringify({ elements: [{ id: 'a', x: 1, y: 1 }], ...loop }));
     expect(selectStrategy(pinned, 'auto', new Log())).toBe('auto');
   });
 });

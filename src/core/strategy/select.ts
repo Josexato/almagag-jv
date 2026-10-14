@@ -1,46 +1,44 @@
 /**
  * Selector de motor por señales — CONTRATO OBSERVABLE heredado de
  * AlmaGag Python v3.20.0 (`generator.py::select_strategy`), con sus
- * mensajes §O53. Por dentro (A2) cada motor es un perfil de capacidades
- * sobre un único pipeline; aquí sólo se decide el perfil.
+ * mensajes §O53. Corre sobre el documento YA normalizado (uniones
+ * expandidas, theme resuelto), como en el oráculo. Por dentro (A2) cada
+ * motor es un perfil de capacidades; aquí sólo se decide el perfil.
  *
  * Orden: --view > considerations/constraints > areas+contains > contains
  * > areas > decision/diamond > ciclo sin coordenadas > auto.
  */
+
 import type { Log } from '../log.ts';
-import type { Diagram, RawConnection, RawElement } from '../parse/sdjf.ts';
+import { type Doc, idKey, isDict, pyIter, truthy } from '../normalize/py.ts';
+import type { Json } from '../parse/json.ts';
 import { stronglyConnectedComponents } from './scc.ts';
 
 export type Profile = 'auto' | 'hier';
 export type View = 'auto' | 'columns' | 'areas' | 'lanes' | 'matrix';
 
-function truthy(v: unknown): boolean {
-  if (v === undefined || v === null || v === false || v === 0 || v === '') return false;
-  if (Array.isArray(v)) return v.length > 0;
-  if (typeof v === 'object') return Object.keys(v).length > 0;
-  return true;
-}
+const dicts = (v: Json | undefined): Map<string, Json>[] => (pyIter(v ?? []) ?? []).filter(isDict);
 
-export function hasCycle(
-  elements: readonly RawElement[],
-  connections: readonly RawConnection[],
-): boolean {
-  const ids = elements.map((e) => e.id);
+export function hasCycle(doc: Doc): boolean {
+  const elements = dicts(doc.get('elements'));
+  const ids = elements.map((e) => idKey(e.get('id')));
   const idset = new Set(ids);
   const out = new Map<string, string[]>(ids.map((i) => [i, []]));
-  for (const c of connections) {
-    if (c.from === c.to && idset.has(c.from)) return true; // self-loop
-    const succ = out.get(c.from);
-    if (succ && idset.has(c.to)) succ.push(c.to);
+  for (const c of dicts(doc.get('connections'))) {
+    const f = idKey(c.get('from'));
+    const t = idKey(c.get('to'));
+    if (f === t && idset.has(f)) return true; // self-loop
+    const succ = out.get(f);
+    if (succ && idset.has(t)) succ.push(t);
   }
-  return stronglyConnectedComponents(ids, out).some((s) => s.length >= 2);
+  return stronglyConnectedComponents([...out.keys()], out).some((s) => s.length >= 2);
 }
 
-export function selectStrategy(d: Diagram, view: View, log: Log): Profile {
-  const raw = d.raw;
-  const soft = truthy(raw['considerations'])
+export function selectStrategy(doc: Doc, view: View, log: Log): Profile {
+  const elements = dicts(doc.get('elements'));
+  const soft = truthy(doc.get('considerations'))
     ? 'considerations'
-    : truthy(raw['constraints'])
+    : truthy(doc.get('constraints'))
       ? 'constraints'
       : null;
   if (view !== 'auto') {
@@ -53,7 +51,7 @@ export function selectStrategy(d: Diagram, view: View, log: Log): Profile {
     return 'hier';
   }
   if (soft) {
-    if (truthy(raw['areas'])) {
+    if (truthy(doc.get('areas'))) {
       log.info(
         `§O53: '${soft}' fuerza AUTO — 'areas' (§I27) se representa ` +
           'como zonas near (§N46): cajas punteadas rotuladas, no la ' +
@@ -62,8 +60,8 @@ export function selectStrategy(d: Diagram, view: View, log: Log): Profile {
     }
     return 'auto';
   }
-  if (d.elements.some((e) => 'contains' in e)) {
-    if (truthy(raw['areas'])) {
+  if (elements.some((e) => e.has('contains'))) {
+    if (truthy(doc.get('areas'))) {
       log.info(
         "§O53: 'areas' + 'contains' — la vista por ámbitos (hier) " +
           'monta los contenedores DENTRO de sus áreas (ARCH-009)',
@@ -72,10 +70,9 @@ export function selectStrategy(d: Diagram, view: View, log: Log): Profile {
     }
     return 'auto';
   }
-  if (truthy(raw['areas'])) return 'hier';
-  if (d.elements.some((e) => e.type === 'decision' || e.type === 'diamond')) return 'hier';
-  if (!d.elements.some((e) => 'x' in e || 'y' in e) && hasCycle(d.elements, d.connections)) {
+  if (truthy(doc.get('areas'))) return 'hier';
+  if (elements.some((e) => e.get('type') === 'decision' || e.get('type') === 'diamond'))
     return 'hier';
-  }
+  if (!elements.some((e) => e.has('x') || e.has('y')) && hasCycle(doc)) return 'hier';
   return 'auto';
 }
